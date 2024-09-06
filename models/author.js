@@ -5,10 +5,11 @@ class AuthorModel extends BaseSQLModel {
         super('author')
     } 
 
-    async findMany() {
-        const articles = await super.findMany()
-        return articles
-    } 
+    async findById(id){
+        const author= await super.findById(id)
+        return author
+    }
+  
     
 } 
 

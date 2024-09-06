@@ -1,7 +1,8 @@
 const authorDbModel = require('../models/author')
-const authorModel = new authorDbModel()
 const articleDbModel = require('../models/article')
-const articleModel=new articleDbModel
+
+const authorModel = new authorDbModel();
+const articleModel=new articleDbModel();
 
 class authorController{
     constructor(){
@@ -15,4 +16,4 @@ class authorController{
     }
 }
 
-modul.exports=authorController
+module.exports= new authorController()
