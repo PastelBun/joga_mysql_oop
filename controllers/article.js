@@ -45,27 +45,10 @@ class articleController {
         })
     }
     async deleteArticle(req, res) {
-        try {
-            // Extract article ID from request parameters
-            const articleId = req.params.id;
-    
-            // Delete the article from the database
-            const result = await articleModel.delete(articleId);
-    
-            if (result === 0) {
-                // If no rows were affected, the article was not found
-                res.status(404).json({ message: `Article with ID ${articleId} not found.` });
-            } else {
-                // Send a successful response
-                res.status(200).json({
-                    message: `Deleted article with ID ${articleId}`
-                });
-            }
-        } catch (error) {
-            // Handle any errors that occur during deletion
-            console.error('Error deleting article:', error);
-            res.status(500).json({ message: 'An error occurred while deleting the article.' });
-        }
+        const articleId = await articleModel.delete(articleId);
+        res.status(201).json({
+            message: `Deleted article with ID ${articleId}`
+        });
     }
     
 } 
