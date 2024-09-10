@@ -1,23 +1,26 @@
-const conn = require('../utils/db')
+const conn = require('../utils/db');
 
 class BaseSQLModel {
     
     constructor(tableName){
-        this.tableName = tableName
+        this.tableName = tableName;
     } 
 
+    // Method to execute a single or multiple queries
     executeQuery(query, params) {
         return new Promise((resolve, reject) => {
-          conn.query(query, params, (error, results) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(results);
-            }
-          });
+            // Handle multiple queries separated by semicolons
+            conn.query(query, params, (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(results); // Array of results for each query
+                }
+            });
         });
-      } 
-    
+    }
+
+
     async findAll() {
         const query = `SELECT * FROM ${this.tableName}`;
         const results = await this.executeQuery(query);
