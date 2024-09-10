@@ -51,8 +51,8 @@ class BaseSQLModel {
     return result.insertId;
     }
 
-    async update(id, data) {
-    const query = `UPDATE ${this.tableName} SET ? WHERE id = ?`;
+    async update(data, id) {
+    const query = `UPDATE ${this.tableName} SET ${data} WHERE id = ${id}`;
     const result = await this.executeQuery(query, [data, id]);
     return result.affectedRows;
     }
