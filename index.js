@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 
 const authorRoutes= require('./routes/author')
 const articleRoutes = require('./routes/article')
-app.use('/author', authorRoutes); 
+app.use('/', authorRoutes); 
 app.use('/', articleRoutes);
 
 app.listen(3025, () => {
