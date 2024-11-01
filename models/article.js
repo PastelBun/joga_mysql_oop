@@ -23,8 +23,8 @@ class ArticleModel extends BaseSQLModel {
         return createdArticleId
     }
     async update(article, id){
-        const updatedArticleId=await super.update(article, id)
-        return updatedArticleId;
+        const articleId=await super.update(id, article)
+        return articleId;
         
     }
     async delete(id){

@@ -30,6 +30,10 @@ class articleController {
         })
     };
     async updateArticle(req,res){
+        const id= parseInt(req.params.id);
+        console.log('Received ID', id);
+        console.log('Request Body:', req.body);
+        
         const updatedArticle={
             name:req.body.name,
             slug:req.body.slug,
@@ -37,14 +41,16 @@ class articleController {
             body:req.body.body,
             published:new Date().toISOString().slice(0,19).replace('T', ' '),
             author_id:req.body.author_id
-        }
-        const articleId=await articleModel.update(updatedArticle)
+        };
+        const articleId= await articleModel.update(id, updatedArticle);
         res.status(201).json({
-            message: `updated article with ID ${articleId}`,
-            article: {id:articleId, ...updatedArticle}
-        })
+            message: `Updated article with ID ${id}`,
+            article: {id:id, ...updatedArticle}
+        });
     }
     async deleteArticle(req, res) {
+        const id= req.body.id;
+        console.log(id);
         const articleId = await articleModel.delete(articleId);
         res.status(201).json({
             message: `Deleted article with ID ${articleId}`
