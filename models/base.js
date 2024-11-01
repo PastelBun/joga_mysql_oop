@@ -58,7 +58,7 @@ class BaseSQLModel {
     }
 
     async delete(id) {
-    const query = `DELETE FROM ${this.tableName} WHERE id = ?`;
+    const query = `DELETE FROM ${this.tableName} WHERE id = ${id}`;
     const result = await this.executeQuery(query, [id]);
     return result.affectedRows;
     }
