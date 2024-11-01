@@ -49,7 +49,7 @@ class articleController {
             }); 
         }
         async deleteArticle(req,res){
-            const id = req.body.id;
+            const id = parseInt(req.params.id);
             console.log(id);
             const result = await articleModel.delete(id);
             res.status(200).json({
