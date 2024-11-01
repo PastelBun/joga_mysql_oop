@@ -48,15 +48,26 @@ class articleController {
                 article: {id:id, ...updatableArticle}   
             }); 
         }
-        async deleteArticle(req,res){
-            const id = parseInt(req.params.id);
-            console.log(id);
-            const result = await articleModel.delete(id);
-            res.status(200).json({
-                message:`Deleted article with ID: ${id}`,
-                article: {id:id}
-            }); 
-        }     
+        async deleteArticle(req, res) {
+            const id = parseInt(req.params.id); // Get ID from URL parameters
+            console.log('Deleting article with ID:', id);
+            
+            try {
+                const result = await articleModel.delete(id); // Call the delete method
+                if (result > 0) {
+                    res.status(200).json({
+                        message: `Deleted article with ID: ${id}`,
+                        article: { id: id }
+                    });
+                } else {
+                    res.status(404).json({ message: `Article with ID ${id} not found` });
+                }
+            } catch (error) {
+                console.error('Error deleting article:', error);
+                res.status(500).json({ message: 'Internal server error' });
+            }
+        }
+        
 } 
 
 module.exports = new articleController()
