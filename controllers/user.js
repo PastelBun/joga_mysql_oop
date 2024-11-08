@@ -1,6 +1,6 @@
-const bcrypt= require('bcrypt')
-const userDbModel= require('../models/user')
-const userModel=new userDbModel()
+const bcrypt = require("bcrypt");
+const userDbModel = require('../models/user');
+const userModel = new userDbModel();
 
 class userController{
 
@@ -14,8 +14,8 @@ class userController{
         if(registeredId){
             const userData= await userModel.findById(registeredId)
             req.session.user={
-                username:userData.username,
-                user_id:userData.id
+                username: userData.username,
+                user_id: userData.id
             }
             res.json({
                 message: "New user is registered",
@@ -25,4 +25,4 @@ class userController{
     }
 }
 
-export default userController;
+module.exports = new userController(); 
