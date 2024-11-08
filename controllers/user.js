@@ -11,6 +11,16 @@ class userController{
             email: req.body.email,
             password: cryptPassword
         })
-        
+        if(registeredId){
+            const userData= await userModel.findById(registeredId)
+            req.session.user={
+                username:userData.username,
+                user_id:userData.id
+            }
+            res.json({
+                message: "New user is registered",
+                user_session: req.session.user
+            })
+        }
     }
 }
