@@ -18,7 +18,7 @@ const articleRoutes = require('./routes/article')
 app.use('/', authorRoutes); 
 app.use('/', articleRoutes);
 
-const userRoutes= require('./routes/users')
+const userRoutes= require('./routes/user')
 app.use('/', userRoutes)
 
 app.listen(3025, () => {
