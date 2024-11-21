@@ -9,4 +9,12 @@ const db = mysql.createConnection({
     multipleStatements: true
 })
 
+db.connect((error) => {
+    if(error) {
+        console.log(error)
+    } else {
+        console.log("MySQL connected!")
+    }
+})
+
 module.exports = db

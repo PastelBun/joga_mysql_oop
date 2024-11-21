@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -11,9 +11,14 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.1",
-    "mysql2": "^3.11.4"
+    "hbs": "^4.2.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.4",
+    "nodemon": "^3.1.7"
   }
 }
