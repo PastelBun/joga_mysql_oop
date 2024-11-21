@@ -53,6 +53,38 @@ class userController {
             return res.render('register', { message: 'An error occurred, please try again later.' });
         }
     }
+    async login(req, res) {
+        const { username, password } = req.body;
+    
+        console.log('Received username:', username);  // Log the username from the request body
+    
+        try {
+            // Check if the username exists
+            const usernameCheck = await userModel.findOneByUsername(username);  // Correct method name
+            console.log('Database returned:', usernameCheck); // Log the result of the database query
+    
+            if (usernameCheck) {
+                // Check if the password is correct
+                const passwordCheck = await bcrypt.compare(password, usernameCheck.password);  // Compare password with hashed password in DB
+    
+                if (passwordCheck) {
+                    // Store user info in session
+                    req.session.user = {
+                        username: usernameCheck.username,
+                        user_id: usernameCheck.id
+                    };
+                    return res.render('login', { message: 'User logged in successfully!' }); // Redirect to a dashboard or another page after login
+                } else {
+                    return res.render('login', { message: 'Incorrect username or password.' });
+                }
+            } else {
+                return res.render('login', { message: 'This user does not exist.' });
+            }
+        } catch (err) {
+            console.error(err);
+            return res.render('login', { message: 'An error occurred, please try again later.' });
+        }
+    } 
 }
 
 module.exports = new userController();
