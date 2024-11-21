@@ -1,3 +1,7 @@
+const bcrypt = require("bcrypt");
+const userDbModel = require('../models/user');
+const userModel = new userDbModel();
+
 class userController {
 
     async register(req, res) {
