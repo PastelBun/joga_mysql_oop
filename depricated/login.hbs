@@ -7,40 +7,34 @@
 <body>
 
 {{!-- Navigation links --}}
-      <nav>
+        <nav>
         <div class="container mt-4">
             <div class="m-5 p-5 bg-black text-white rounded">
                 <h4>Node MySQL Login</h4>
                 <ul>
                     <li class="btn btn-dark"><a href="/">Home</a></li>
                     <li class="btn btn-dark"><a href="/login">Login</a></li>
-                    <li class="btn btn-dark"><a href="/register">Register</a></li>
+                    <li class="btn btn-dark"><a href="/register">Register</a></li>                    
+                    <li class="btn btn-dark"><a href="/articles">articles</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
-<div class="container mt-4">
+    {{!-- Body of each page will go here --}}
+    <div class="container mt-4">
         <div class="card" style="width: 18rem;">            
-            <div class="card-header">Register Form</div>    
+            <div class="card-header">Login Form</div>    
             <div class="card-body">
-                <form action="/user/register" method="POST">
+                <form action="/user/login" method="POST">
                     <div class="mb-3">
-                        <label for="name-reg" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name-reg" name="name">                        
-                    </div>
-                    <div class="mb-3">
-                        <label for="email-reg" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email-reg" name="email">                        
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">                        
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
-                    <div class="mb-3">
-                        <label for="password_confirm" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="password_confirm" name="password_confirm">
-                    </div>
+                    
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

@@ -1,19 +1,26 @@
 const express = require('express');
 const sessions = require('express-session');
 const bodyParser = require('body-parser');
-const app = express();
-const dotenv = require('dotenv');
+//const dotenv = require('dotenv');
 const path = require("path");
-const publicDir = path.join(__dirname, './public');
-const bcrypt = require("bcryptjs");
+//const publicDir = path.join(__dirname, './public');
+const hbs=require('express-handlebars');
+const app = express();
+const con=require('./utils/db')
 
-app.use(express.static(publicDir))
-app.set('view engine', 'hbs')
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+app.engine('hbs', hbs.engine({
+    extname:'hbs',
+    defaultLayout:'main',
+    layoutsDir: __dirname+'/views/layouts/'
+}))
 app.use(express.static('public'));
+//app.use(express.static(publicDir))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: 'false' }));
-app.use(express.json());
+//app.use(express.json());
 
 app.use(sessions({
     secret: "thisismysecretkey",
@@ -22,18 +29,23 @@ app.use(sessions({
     resave: false
 }));
 
-dotenv.config({ path: './.env' });
+
+con.connect(function(err){
+    if(err) throw err;
+    console.log("Connected to joga_mysql_oop db");
+})
+//dotenv.config({ path: './.env' });
 
 app.get("/", (req, res) => {
-    res.render("index");
-});
-
-app.get("/register", (req, res) => {
-    res.render("register");
-});
-
-app.get("/login", (req, res) => {
-    res.render("login");
+    let query = "SELECT * FROM article";
+    con.query(query, (err, result) => {
+        if (err) throw err;
+        let articles = result;
+        console.log(articles); 
+        res.render('index', {
+            articles: articles
+        });
+    });
 });
 
 
@@ -49,6 +61,6 @@ app.use('/', articleRoutes);
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
 
-app.listen(3025, () => {
-    console.log('App is started at http://localhost:3025');
+app.listen(3001, () => {
+    console.log('App is started at http://localhost:3001');
 });
