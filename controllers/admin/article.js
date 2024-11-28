@@ -3,22 +3,50 @@ const articleModel=new articleDbModel
 const articleController=require('../article');
 
 class articleAdminController extends articleController{
-
-    async createNewArticle(req,res){
-        const newArticle={
-            name:req.body.name,
-            slug:req.body.slug,
-            image:req.body.image,
-            body:req.body.body,
-            published:new Date().toISOString().slice(0,19).replace('T', ' '),
-            author_id:req.body.author_id
+    //currently still crashes server if same slug is used
+    async createNewArticle(req, res) {
+        const newArticle = {
+            name: req.body.name,
+            slug: req.body.slug,
+            image: req.body.image,
+            body: req.body.body,
+            published: new Date().toISOString().slice(0, 19).replace('T', ' '),  // Set the publication date
+            author_id: req.body.author_id  // Assuming you have an author ID from the form
+        };
+    
+        try {
+            // Check if the slug already exists in the article table
+            const slugCheck = await articleModel.findSlug(newArticle.slug);  // Use newArticle.slug
+    
+            console.log('Slug check result:', slugCheck);  // Log the result for debugging
+    
+            // If the slug exists, return an error message
+            if (slugCheck > 0) {
+                return res.render('create', { message: 'Slug already in use' });
+            }
+            else{
+            // If the slug doesn't exist, proceed to create the new article
+            const articleId = await articleModel.create(newArticle);
+    
+            // Send a JSON response confirming article creation
+            res.status(201).json({
+                message: `Created article with ID ${articleId}`,
+                article: { id: articleId, ...newArticle }
+            });
+            }
+            // Optionally, redirect to another page after article creation (like a dashboard or article list)
+            // res.redirect('/admin/articles');
+    
+        } catch (err) {
+            console.error(err);  // Log any errors for debugging
+            res.status(500).json({ message: 'Error occurred while creating the article' });
         }
-        const articleId=await articleModel.create(newArticle)
-        res.status(201).json({
-            message: `created article with ID ${articleId}`,
-            article: {id:articleId, ...newArticle}
-        })
-    };  
+    };
+    
+    async findSlug(req,res){
+        const article=await articleModel.findOne(req.params.slug)
+        res.status(201).json({article: article})
+    }
         async updateArticle(req,res){
             const id = parseInt(req.params.id); 
             console.log('Received ID:', id); 

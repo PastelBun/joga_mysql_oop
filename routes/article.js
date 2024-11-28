@@ -7,5 +7,7 @@ router.get('/article/:slug', (req, res)=>articleController.getArticleBySlug(req,
 router.get('/article/create', (req, res) => {
     res.render('form');
 });
+router.post('/create', articleController.createNewArticle);
+
 
 module.exports = router

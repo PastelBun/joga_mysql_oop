@@ -59,6 +59,22 @@ app.get('/article/:slug', (req,res)=> {
     });
 });
 
+app.get('/login', (req, res)=>{
+    res.render("login")
+})
+app.get('/register', (req, res)=>{
+    res.render("register")
+})
+app.get('/create', (req, res)=>{
+    res.render("create")
+})
+app.get('/edit/:id', (req, res)=>{
+    res.render("edit")
+})
+app.get('/delete/:id', (req, res)=>{
+    let query=`DELETE FROM article WHERE id="${req.params.id}"`
+    res.render('delete')  
+});
 
 // Import route handlers after POST route to avoid conflicts
 const authorRoutes = require('./routes/author');
