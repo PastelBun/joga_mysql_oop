@@ -42,10 +42,12 @@ app.get("/login", (req, res) => {
 const authorRoutes = require('./routes/author');
 const articleRoutes = require('./routes/article');
 const userRoutes = require('./routes/user');
+const adminRoutes =require('./routes/admin');
 
 app.use('/', authorRoutes);
 app.use('/', articleRoutes);
 app.use('/', userRoutes);
+app.use('/', adminRoutes);
 
 app.listen(3025, () => {
     console.log('App is started at http://localhost:3025');

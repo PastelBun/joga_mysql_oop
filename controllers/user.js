@@ -9,7 +9,7 @@ class userController {
         try {
             // Check if the email already exists
             console.log('Checking email:', email); // Debugging line
-            const emailCheck = await userModel.findOne({ email: email });
+            const emailCheck = await userModel.findOneByEmail({ email: email });
 
             console.log('Email check result:', emailCheck); // Debugging line
             // If emailCheck is not null, it means the email already exists
