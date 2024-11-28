@@ -48,6 +48,16 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get('/article/:slug', (req,res)=> {
+    let query=`SELECT * FROM article WHERE slug="${req.params.slug}"`
+    con.query(query, (err, result)=>{
+        let article=result
+        console.log(article)
+        res.render('article', {
+            article:article
+        })
+    });
+});
 
 
 // Import route handlers after POST route to avoid conflicts
