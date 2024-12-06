@@ -21,10 +21,9 @@ class articleAdminController extends articleController{
             console.log('Slug check result:', slugCheck);  // Log the result for debugging
     
             // If the slug exists, return an error message
-            if (slugCheck > 0) {
+            if (slugCheck ) {
                 return res.render('create', { message: 'Slug already in use' });
             }
-            else{
             // If the slug doesn't exist, proceed to create the new article
             const articleId = await articleModel.create(newArticle);
     
@@ -33,7 +32,7 @@ class articleAdminController extends articleController{
                 message: `Created article with ID ${articleId}`,
                 article: { id: articleId, ...newArticle }
             });
-            }
+            
             // Optionally, redirect to another page after article creation (like a dashboard or article list)
             // res.redirect('/admin/articles');
     
@@ -65,6 +64,7 @@ class articleAdminController extends articleController{
                 message:`Updated article with ID: ${id}`,
                 article: {id:id, ...updatableArticle}   
             }); 
+            console.log(result)
         }
         async deleteArticle(req, res) {
             const id = parseInt(req.params.id); // Get ID from URL parameters
