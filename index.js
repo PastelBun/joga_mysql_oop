@@ -9,6 +9,8 @@ const app = express();
 const con=require('./utils/db')
 const methodOverride = require('express-method-override');
 app.use(methodOverride('_method'));
+const checkUser = require('./utils/userCheck');
+
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -76,13 +78,12 @@ app.get('/edit/:id', (req, res) => {
         res.render('edit', { article: article });
     });
 });
-
-app.get('/delete/:id', (req, res) => {
+app.get ('/admin/article/delete/:id', checkUser('admin'), (req, res)=>{
     let query = `DELETE FROM article WHERE id = ?`;  // Use parameterized query to avoid SQL injection
     let articleId = req.params.id;
 
     con.query(query, [articleId], (err, result) => {
-        if (err) {
+                if (err) {
             // If an error occurs, render the 'delete' page with error message
             return res.render('delete', {
                 err: 'An error occurred while deleting the article.'
@@ -102,6 +103,7 @@ app.get('/delete/:id', (req, res) => {
         }
     });
 });
+
 
 app.get('/admin/article/create', (req, res)=>{
     let query = `SELECT * FROM article WHERE id = ?`;
